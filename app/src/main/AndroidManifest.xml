@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hlnote">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TodayActivity"
+            android:label="备忘录"
+            android:launchMode="singleTask">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="关于">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AccountActivity"
+            android:label="账本">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SettingActivity"
+            android:label="设置">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.MainActivity" />
+        </activity>
+
+        <receiver
+            android:name=".MemoWidget"
+            android:exported="false"
+            android:label="备忘录">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_memo_info" />
+
+            <intent-filter>
+                <action android:name="com.hlnote.MemoWidget" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.intent.action.ACTION_TIME_TICK" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".Add_MemoActivity"
+            android:label="新建备忘">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.TodayActivity" />
+        </activity>
+        <!-- 用于刷新备忘录桌面插件的视图 -->
+        <service
+            android:name=".MyRemoteViewService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <!-- 用于定时发送消息更新备忘录组件视图 -->
+        <service
+            android:name=".MemoWidgetService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name=".Edit_MemoActivity"
+            android:label="备忘详细">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.hlnote.TodayActivity" />
+        </activity>
+        <activity android:name=".MemoActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_xx">16sp</dimen>
+    <dimen name="text_size_x">12sp</dimen>
+    <dimen name="text_size_lunar">8sp</dimen>
+    <dimen name="text_size_m">10sp</dimen>
+    <dimen name="divider">12dp</dimen>
+    <dimen name="bottom_menu">50dp</dimen>
+</resources>

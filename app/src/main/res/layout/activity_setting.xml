@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:divider="@drawable/divider_v"
+    android:showDividers="middle"
+    android:padding="10dp"
+    tools:context="com.hlnote.SettingActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="备忘录"/>
+    <Switch
+        android:id="@+id/swt_memo_desk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="桌面控件"
+        android:textSize="17sp"
+        android:checked="true" />
+</LinearLayout>

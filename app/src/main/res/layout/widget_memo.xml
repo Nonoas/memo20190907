@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/text_border"
+    android:padding="10dp"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/widget_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="今日事务"
+        android:layout_marginBottom="5dp"/>
+    <ListView
+        android:id="@+id/lv_widget_today"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:background="@drawable/text_border"/>
+    <TextView
+        android:id="@+id/tv_widget_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="暂无待办事项"
+        android:background="@drawable/text_border"/>
+</LinearLayout>

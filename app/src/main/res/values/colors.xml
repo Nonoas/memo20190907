@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#2D576B</color>
+    <color name="colorAccent">#58D1B6</color>
+    <color name="colorYANHONG">#ed5a65</color>
+    <color name="colorPrimary">#63c1eb</color>
+    <color name="colorBackground">#f5f5fa</color>
+    <color name="colorWeekend">#F7AEA6</color>
+    <color name="colorStroke">#e6e6e6</color><!--分割线颜色-->
+    <color name="colorLight">#fff</color>
+    <color name="colorSign">#FFB664</color>
+    <color name="colorIcon">#474545</color>
+</resources>
