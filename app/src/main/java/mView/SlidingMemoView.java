@@ -3,15 +3,11 @@ package mView;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
-import com.hlnote.MainActivity;
 import com.hlnote.R;
-
-import Utils.UI_Utils;
 
 public class SlidingMemoView extends ScrollView {
     private int scroll_height;//滚动距离
@@ -39,7 +35,6 @@ public class SlidingMemoView extends ScrollView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        lv=findViewById(R.id.m_lv_today);
         l1=findViewById(R.id.memo_linear_1);
         l2=findViewById(R.id.memo_linear_2);
         l3=findViewById(R.id.memo_linear_3);

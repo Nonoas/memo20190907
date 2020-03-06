@@ -61,6 +61,7 @@
                 <action android:name="com.hlnote.MemoWidget" />
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="android.intent.action.ACTION_TIME_TICK" />
+                <action android:name="android.intent.action.SCREEN_ON"/>
             </intent-filter>
         </receiver>
 

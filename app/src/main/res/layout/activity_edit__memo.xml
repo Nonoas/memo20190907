@@ -3,85 +3,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/colorBackground"
+    android:orientation="vertical"
     tools:context="com.hlnote.Add_MemoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorLight"
         android:divider="@drawable/divider_v"
-        android:showDividers="middle"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorLight">
+        android:showDividers="middle">
+
         <EditText
             android:id="@+id/ed_title_0"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:maxLines="1"
-            android:hint="标题"
-            android:textSize="@dimen/text_size_xx"
+            android:background="@color/colorLight"
             android:focusable="false"
-            android:background="@color/colorLight"/>
+            android:hint="标题"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size_xx" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/colorLight"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorLight"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_xx"
-                android:text="开始时间"/>
+                android:text="开始时间"
+                android:textSize="@dimen/text_size_xx" />
+
             <TextView
                 android:id="@+id/st_time_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_xx"
                 android:gravity="right"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_xx" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@color/colorLight"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorLight"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_xx"
-                android:text="结束时间"/>
+                android:text="结束时间"
+                android:textSize="@dimen/text_size_xx" />
+
             <TextView
                 android:id="@+id/ed_time_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
-                android:textSize="@dimen/text_size_xx"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textSize="@dimen/text_size_xx" />
         </LinearLayout>
     </LinearLayout>
+
     <EditText
         android:id="@+id/ed_content_0"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:hint="内容"
-        android:textSize="@dimen/text_size_xx"
+        android:background="@color/colorLight"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="start|top"
+        android:hint="内容"
         android:padding="10dp"
-        android:background="@color/colorLight"/>
+        android:textSize="@dimen/text_size_xx" />
 </LinearLayout>

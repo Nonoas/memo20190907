@@ -19,5 +19,7 @@ public class AccountActivity extends AppCompatActivity {
         if(NavUtils.getParentActivityName(AccountActivity.this)!=null&&getSupportActionBar()!=null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);//如果父activity不为空则显示向左的图标
         }
+
+
     }
 }

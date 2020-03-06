@@ -1,11 +1,14 @@
 package Utils;
 
 
+import java.util.Arrays;
+
 /**
- * 中国农历算法 -
+ * 中国农历算法
  * 实用于公历 1901 年至 2100 年之间的 200 年
  */
 public class LunarUtil {
+
     private int gregorianYear;//阳历年
     private int gregorianMonth;//阳历月
     private int gregorianDay;//阳历日
@@ -14,30 +17,26 @@ public class LunarUtil {
     private int dayOfWeek; // 周日是一星期的第一天
     private int chineseYear;//农历年
     private int chineseMonth; // 负数表示闰月
-    private int chineseDay;//农历日
+    private int chineseDay; //农历日
     private int sectionalTerm;
     private int principleTerm;
     private static char[] daysInGregorianMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    public static final String[] daysOfMonth = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
-            "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
-            "31"};
     private static String[] stemNames = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
     private static String[] branchNames = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
     private static String[] animalNames = {"鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"};
 
-    private String monthOfAlmanac[] = {"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"};
-    private String daysOfAlmanac[] = {"初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三",
+    private final String monthOfAlmanac[] = {"正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"};
+    private final String daysOfAlmanac[] = {"初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十", "十一", "十二", "十三",
             "十四", "十五", "十六", "十七", "十八", "十九", "二十", "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"}; // 农历的天数
 
-    public LunarUtil() {
-        setDate(1901, 1, 1);
-    }
-
+    /**
+     * 构造器，传入阳历的年月日
+     *
+     * @param y 年
+     * @param m 月
+     * @param d 日
+     */
     public LunarUtil(int y, int m, int d) {
-        setDate(y, m, d);
-    }
-
-    public void setDate(int y, int m, int d) {
         setGregorian(y, m, d);//传入阳历日期
         computeChineseFields();
         computeSolarTerms();
@@ -46,56 +45,22 @@ public class LunarUtil {
     /**
      * 得到对应天的农历 要判断闰月 月初 月末 *
      *
-     * @param y
-     * @param m
-     * @param d
-     * @return String
-     */
-    public String getChineseDay(int y, int m, int d) {
-        setDate(y, m, d);
-        int cd = getChineseDayInt();
-        return daysOfAlmanac[cd - 1];
-    }
-
-    /**
-     * 得到对应天的农历 要判断闰月 月初 月末 *
-     *
      * @return String
      */
     public String getChineseDay() {
-        int cd = getChineseDayInt();
 
-            return daysOfAlmanac[cd - 1];
+        int cd = chineseDay;
+        return daysOfAlmanac[cd - 1];
     }
+
 
     /**
      * 得到对应天的农历 要判断闰月 月初 月末
      *
-     * @param y
-     * @param m
-     * @param d
-     * @return
-     */
-    public String getChineseMonth(int y, int m, int d) {
-        setDate(y, m, d);
-
-        int cd = getChineseMonthInt();
-        if (cd < 1)
-            return "闰" + monthOfAlmanac[Math.abs(cd) - 1];
-        else if (cd > 29)
-            return cd + "*";
-        else if (cd > 12)
-            return cd + "*";
-        return monthOfAlmanac[cd - 1];
-    }
-
-    /**
-     * 得到对应天的农历 要判断闰月 月初 月末
-     *
-     * @return
+     * @return 农历月
      */
     public String getChineseMonth() {
-        int cd = getChineseMonthInt();
+        int cd = chineseMonth;
         if (cd < 1)
             return "闰" + monthOfAlmanac[Math.abs(cd) - 1];
         else if (cd > 29)
@@ -108,27 +73,10 @@ public class LunarUtil {
     /**
      * 得到对应年的农历
      *
-     * @param y
-     * @param m
-     * @param d
-     * @return
-     */
-    public String getChineseYear(int y, int m, int d) {
-        setDate(y, m, d);
-
-        int year = getChineseYearInt();
-        int stem = (year - 1) % 10;
-        int branch = (year - 1) % 12;
-        return stemNames[stem] + branchNames[branch];
-    }
-
-    /**
-     * 得到对应年的农历
-     *
-     * @return
+     * @return 天干地支
      */
     public String getChineseYear() {
-        int year = getChineseYearInt();
+        int year = chineseYear;
         int stem = (year - 1) % 10;
         int branch = (year - 1) % 12;
         return stemNames[stem] + branchNames[branch];//返回天干地支
@@ -136,38 +84,38 @@ public class LunarUtil {
 
     /**
      * 初始化变量
+     *
      * @param y 年
      * @param m 月
      * @param d 日
      */
     private void setGregorian(int y, int m, int d) {
-        gregorianYear = y;
-        gregorianMonth = m;
-        gregorianDay = d;
-        isGregorianLeap = isGregorianLeapYear(y);//判断是否为闰年
-        dayOfYear = dayOfYear(y, m, d);//计算当前天在本年是第几天
-        dayOfWeek = dayOfWeek(y, m, d);//计算当前天使星期几
-        chineseYear = 0;
-        chineseMonth = 0;
-        chineseDay = 0;
-        sectionalTerm = 0;
-        principleTerm = 0;
+        this.gregorianYear = y;
+        this.gregorianMonth = m;
+        this.gregorianDay = d;
+        this.isGregorianLeap = isGregorianLeapYear(y);//判断是否为闰年
+        this.dayOfYear = dayOfYear(y, m, d);//计算当前天在本年是第几天
+        this.dayOfWeek = dayOfWeek(y, m, d);//计算当前天使星期几
+        this.chineseYear = 0;
+        this.chineseMonth = 0;
+        this.chineseDay = 0;
+        this.sectionalTerm = 0;
+        this.principleTerm = 0;
     }
 
     // 判断是否是闰年
-    public static boolean isGregorianLeapYear(int year) {
-        boolean isLeap = false;
-        if (year % 4 == 0)
-            isLeap = true;
-        if (year % 100 == 0)
-            isLeap = false;
-        if (year % 400 == 0)
-            isLeap = true;
-        return isLeap;
+    private static boolean isGregorianLeapYear(int year) {
+        return ((year % 4 == 0) && (year % 100 != 0) || year % 400 == 0);
     }
 
-    // 返回一个月有几天
-    public static int daysInGregorianMonth(int y, int m) {
+    /**
+     * 返回一个月有多少天
+     *
+     * @param y 年
+     * @param m 月
+     * @return 当月的天数
+     */
+    private static int daysInGregorianMonth(int y, int m) {
         int d = daysInGregorianMonth[m - 1];
         if (m == 2 && isGregorianLeapYear(y))
             d++; // 公历闰年二月多一天
@@ -176,12 +124,13 @@ public class LunarUtil {
 
     /**
      * 计算当前天在本年是第几天
+     *
      * @param y 年
      * @param m 月
      * @param d 日
-     * @return int
+     * @return 前天在本年是第几天
      */
-    public static int dayOfYear(int y, int m, int d) {
+    private static int dayOfYear(int y, int m, int d) {
         int c = 0;
         for (int i = 1; i < m; i++) {
             c = c + daysInGregorianMonth(y, i);
@@ -190,23 +139,32 @@ public class LunarUtil {
         return c;
     }
 
-    // 当前天是本周的第几天 ， 从星期天开始算
-    public static int dayOfWeek(int y, int m, int d) {
-        int w = 1; // 公历一年一月一日是星期一，所以起始值为星期日
-        y = (y - 1) % 400 + 1; // 公历星期值分部 400 年循环一次
-        int ly = (y - 1) / 4; // 闰年次数
-        ly = ly - (y - 1) / 100;
-        ly = ly + (y - 1) / 400;
-        int ry = y - 1 - ly; // 常年次数
-        w = w + ry; // 常年星期值增一
-        w = w + 2 * ly; // 闰年星期值增二
-        w = w + dayOfYear(y, m, d);
-        w = (w - 1) % 7 + 1;
+    /**
+     * 计算当前天本周的第几天
+     *
+     * @param year  年
+     * @param month 月
+     * @param day   日
+     * @return 周几
+     */
+    private static int dayOfWeek(int year, int month, int day) {
+        int m = month, d = day;
+        if (month <= 2) { /*对小于2的月份进行修正*/
+            year--;
+            m = month + 12;
+        }
+        int y = year % 100;
+        int c = year / 100;//世纪数减1
+        int w = (y + y / 4 + c / 4 - 2 * c + (13 * (m + 1) / 5) + d - 1) % 7;
+        if (w < 0) /*修正计算结果是负数的情况*/
+            w += 7;
         return w;
     }
 
-    // 农历月份大小压缩表，两个字节表示一年。两个字节共十六个二进制位数，
-    // 前四个位数表示闰月月份，后十二个位数表示十二个农历月份的大小。
+    /**
+     * 农历月份大小压缩表，两个字节表示一年。两个字节共十六个二进制位数，
+     * 前四个位数表示闰月月份，后十二个位数表示十二个农历月份的大小。
+     */
     private static char[] chineseMonths = {0x00, 0x04, 0xad, 0x08, 0x5a, 0x01, 0xd5, 0x54, 0xb4, 0x09, 0x64, 0x05,
             0x59, 0x45, 0x95, 0x0a, 0xa6, 0x04, 0x55, 0x24, 0xad, 0x08, 0x5a, 0x62, 0xda, 0x04, 0xb4, 0x05, 0xb4, 0x55,
             0x52, 0x0d, 0x94, 0x0a, 0x4a, 0x2a, 0x56, 0x02, 0x6d, 0x71, 0x6d, 0x01, 0xda, 0x02, 0xd2, 0x52, 0xa9, 0x05,
@@ -428,106 +386,25 @@ public class LunarUtil {
         return term;
     }
 
+    @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("Gregorian Year: " + gregorianYear + "\n");
-        buf.append("Gregorian Month: " + gregorianMonth + "\n");
-        buf.append("Gregorian Day: " + gregorianDay + "\n");
-        buf.append("Is Leap Year: " + isGregorianLeap + "\n");
-        buf.append("Day of Year: " + dayOfYear + "\n");
-        buf.append("Day of Week: " + dayOfWeek + "\n");
-        buf.append("Chinese Year: " + chineseYear + "\n");
-        buf.append("Heavenly Stem: " + ((chineseYear - 1) % 10) + "\n");
-        buf.append("Earthly Branch: " + ((chineseYear - 1) % 12) + "\n");
-        buf.append("Chinese Month: " + chineseMonth + "\n");
-        buf.append("Chinese Day: " + chineseDay + "\n");
-        buf.append("Sectional Term: " + sectionalTerm + "\n");
-        buf.append("Principle Term: " + principleTerm + "\n");
-        return buf.toString();
-    }
-
-    public String[] getYearTable() {
-        setGregorian(gregorianYear, 1, 1);
-        computeChineseFields();
-        computeSolarTerms();
-        String[] table = new String[58]; // 6*9 + 4
-        table[0] = getTextLine(27, "公历年历：" + gregorianYear);
-        table[1] = getTextLine(27, "农历年历：" + (chineseYear + 1) + " (" + stemNames[(chineseYear + 1 - 1) % 10]
-                + branchNames[(chineseYear + 1 - 1) % 12] + " - " + animalNames[(chineseYear + 1 - 1) % 12] + "年)");
-        int ln = 2;
-        String blank = "                                         " + "  " + "                                         ";
-        String[] mLeft = null;
-        String[] mRight = null;
-        for (int i = 1; i <= 6; i++) {
-            table[ln] = blank;
-            ln++;
-            mLeft = getMonthTable();
-            mRight = getMonthTable();
-            for (int j = 0; j < mLeft.length; j++) {
-                String line = mLeft[j] + "  " + mRight[j];
-                table[ln] = line;
-                ln++;
-            }
-        }
-        table[ln] = blank;
-        ln++;
-        table[ln] = getTextLine(0, "##/## - 公历日期/农历日期，(*)#月 - (闰)农历月第一天");
-        ln++;
-        return table;
-    }
-
-    public static String getTextLine(int s, String t) {
-        String str = "                                         " + "  " + "                                         ";
-        if (t != null && s < str.length() && s + t.length() < str.length())
-            str = str.substring(0, s) + t + str.substring(s + t.length());
-        return str;
+        return "Gregorian Year: " + gregorianYear + "\n" +
+                "Gregorian Month: " + gregorianMonth + "\n" +
+                "Gregorian Day: " + gregorianDay + "\n" +
+                "Is Leap Year: " + isGregorianLeap + "\n" +
+                "Day of Year: " + dayOfYear + "\n" +
+                "Day of Week: " + dayOfWeek + "\n" +
+                "Chinese Year: " + chineseYear + "\n" +
+                "Heavenly Stem: " + ((chineseYear - 1) % 10) + "\n" +
+                "Earthly Branch: " + ((chineseYear - 1) % 12) + "\n" +
+                "Chinese Month: " + chineseMonth + "\n" +
+                "Chinese Day: " + chineseDay + "\n" +
+                "Sectional Term: " + sectionalTerm + "\n" +
+                "Principle Term: " + principleTerm;
     }
 
     private static String[] monthNames = {"一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"};
 
-    public String[] getMonthTable() {
-        setGregorian(gregorianYear, gregorianMonth, 1);
-        computeChineseFields();
-        computeSolarTerms();
-        String[] table = new String[8];
-        String title = null;
-        if (gregorianMonth < 11)
-            title = "                   ";
-        else
-            title = "                 ";
-        title = title + monthNames[gregorianMonth - 1] + "月" + "                   ";
-        String header = "   日    一    二    三    四    五    六 ";
-        String blank = "                                          ";
-        table[0] = title;
-        table[1] = header;
-        int wk = 2;
-        String line = "";
-        for (int i = 1; i < dayOfWeek; i++) {
-            line += "     " + ' ';
-        }
-        int days = daysInGregorianMonth(gregorianYear, gregorianMonth);
-        for (int i = gregorianDay; i <= days; i++) {
-            line += getDayString() + ' ';
-            rollUpOneDay();
-            if (dayOfWeek == 1) {
-                table[wk] = line;
-                line = "";
-                wk++;
-            }
-        }
-        for (int i = dayOfWeek; i <= 7; i++) {
-            line += "     " + ' ';
-        }
-        table[wk] = line;
-        for (int i = wk + 1; i < table.length; i++) {
-            table[i] = blank;
-        }
-        for (int i = 0; i < table.length; i++) {
-            table[i] = table[i].substring(0, table[i].length() - 1);
-        }
-
-        return table;
-    }
 
     private static String[] chineseMonthNames = {"正", "二", "三", "四", "五", "六", "七", "八", "九", "十", "冬", "腊"};
     private static String[] sectionalTermNames = {"立春", "惊蛰", "清明", "立夏", "芒种", "小暑", "立秋", "白露", "寒露", "立冬", "大雪",
@@ -535,325 +412,8 @@ public class LunarUtil {
     private static String[] principleTermNames = {"雨水", "春分", "谷雨", "小满", "夏至", "大暑", "处暑", "秋分", "霜降", "小雪", "冬至",
             "大寒"};
 
-    public String getDayString() {
-        String str = "*  /  ";
-        String gm = String.valueOf(gregorianMonth);
-        if (gm.length() == 1)
-            gm = ' ' + gm;
-        String cm = String.valueOf(Math.abs(chineseMonth));
-        if (cm.length() == 1)
-            cm = ' ' + cm;
-        String gd = String.valueOf(gregorianDay);
-        if (gd.length() == 1)
-            gd = ' ' + gd;
-        String cd = String.valueOf(chineseDay);
-        if (cd.length() == 1)
-            cd = ' ' + cd;
-        if (gregorianDay == sectionalTerm) {
-            str = " " + sectionalTermNames[gregorianMonth - 1];
-        } else if (gregorianDay == principleTerm) {
-            str = " " + principleTermNames[gregorianMonth - 1];
-        } else if (chineseDay == 1 && chineseMonth > 0) {
-            str = " " + chineseMonthNames[chineseMonth - 1] + "月";
-        } else if (chineseDay == 1 && chineseMonth < 0) {
-            str = "*" + chineseMonthNames[-chineseMonth - 1] + "月";
-        } else {
-            str = gd + '/' + cd;
-        }
-        return str;
-    }
-
-    public int rollUpOneDay() {
-        dayOfWeek = dayOfWeek % 7 + 1;
-        dayOfYear++;
-        gregorianDay++;
-        int days = daysInGregorianMonth(gregorianYear, gregorianMonth);
-        if (gregorianDay > days) {
-            gregorianDay = 1;
-            gregorianMonth++;
-            if (gregorianMonth > 12) {
-                gregorianMonth = 1;
-                gregorianYear++;
-                dayOfYear = 1;
-                isGregorianLeap = isGregorianLeapYear(gregorianYear);
-            }
-            sectionalTerm = sectionalTerm(gregorianYear, gregorianMonth);
-            principleTerm = principleTerm(gregorianYear, gregorianMonth);
-        }
-        chineseDay++;
-        days = daysInChineseMonth(chineseYear, chineseMonth);
-        if (chineseDay > days) {
-            chineseDay = 1;
-            chineseMonth = nextChineseMonth(chineseYear, chineseMonth);
-            if (chineseMonth == 1)
-                chineseYear++;
-        }
-        return 0;
-    }
-
-    public int getGregorianYear() {
-        return gregorianYear;
-    }
-
-    public void setGregorianYear(int gregorianYear) {
-        this.gregorianYear = gregorianYear;
-    }
-
-    public int getGregorianMonth() {
-        return gregorianMonth;
-    }
-
-    public void setGregorianMonth(int gregorianMonth) {
-        this.gregorianMonth = gregorianMonth;
-    }
-
-    public int getGregorianDay() {
-        return gregorianDay;
-    }
-
-    public void setGregorianDay(int gregorianDay) {
-        this.gregorianDay = gregorianDay;
-    }
-
-    public boolean isGregorianLeap() {
-        return isGregorianLeap;
-    }
-
-    public void setGregorianLeap(boolean isGregorianLeap) {
-        this.isGregorianLeap = isGregorianLeap;
-    }
-
-    public int getDayOfYear() {
-        return dayOfYear;
-    }
-
-    public void setDayOfYear(int dayOfYear) {
-        this.dayOfYear = dayOfYear;
-    }
-
-    public int getDayOfWeek() {
-        return dayOfWeek;
-    }
-
-    public void setDayOfWeek(int dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    public int getChineseYearInt() {
-        return chineseYear;
-    }
-
-    public void setChineseYear(int chineseYear) {
-        this.chineseYear = chineseYear;
-    }
-
-    public int getChineseMonthInt() {
-        return chineseMonth;
-    }
-
-    public void setChineseMonth(int chineseMonth) {
-        this.chineseMonth = chineseMonth;
-    }
-
-    public int getChineseDayInt() {
-        return chineseDay;
-    }
-
-    public void setChineseDay(int chineseDay) {
-        this.chineseDay = chineseDay;
-    }
-
-    public int getSectionalTerm() {
-        return sectionalTerm;
-    }
-
-    public void setSectionalTerm(int sectionalTerm) {
-        this.sectionalTerm = sectionalTerm;
-    }
-
-    public int getPrincipleTerm() {
-        return principleTerm;
-    }
-
-    public void setPrincipleTerm(int principleTerm) {
-        this.principleTerm = principleTerm;
-    }
-
-    public static char[] getDaysInGregorianMonth() {
-        return daysInGregorianMonth;
-    }
-
-    public static void setDaysInGregorianMonth(char[] daysInGregorianMonth) {
-        LunarUtil.daysInGregorianMonth = daysInGregorianMonth;
-    }
-
-    public static String[] getStemNames() {
-        return stemNames;
-    }
-
-    public static void setStemNames(String[] stemNames) {
-        LunarUtil.stemNames = stemNames;
-    }
-
-    public static String[] getBranchNames() {
-        return branchNames;
-    }
-
-    public static void setBranchNames(String[] branchNames) {
-        LunarUtil.branchNames = branchNames;
-    }
-
-    public static String[] getAnimalNames() {
-        return animalNames;
-    }
-
-    public static void setAnimalNames(String[] animalNames) {
-        LunarUtil.animalNames = animalNames;
-    }
-
-    public static char[] getChineseMonths() {
-        return chineseMonths;
-    }
-
-    public static void setChineseMonths(char[] chineseMonths) {
-        LunarUtil.chineseMonths = chineseMonths;
-    }
-
-    public static int getBaseYear() {
-        return baseYear;
-    }
-
-    public static void setBaseYear(int baseYear) {
-        LunarUtil.baseYear = baseYear;
-    }
-
-    public static int getBaseMonth() {
-        return baseMonth;
-    }
-
-    public static void setBaseMonth(int baseMonth) {
-        LunarUtil.baseMonth = baseMonth;
-    }
-
-    public static int getBaseDay() {
-        return baseDay;
-    }
-
-    public static void setBaseDay(int baseDay) {
-        LunarUtil.baseDay = baseDay;
-    }
-
-    public static int getBaseIndex() {
-        return baseIndex;
-    }
-
-    public static void setBaseIndex(int baseIndex) {
-        LunarUtil.baseIndex = baseIndex;
-    }
-
-    public static int getBaseChineseYear() {
-        return baseChineseYear;
-    }
-
-    public static void setBaseChineseYear(int baseChineseYear) {
-        LunarUtil.baseChineseYear = baseChineseYear;
-    }
-
-    public static int getBaseChineseMonth() {
-        return baseChineseMonth;
-    }
-
-    public static void setBaseChineseMonth(int baseChineseMonth) {
-        LunarUtil.baseChineseMonth = baseChineseMonth;
-    }
-
-    public static int getBaseChineseDay() {
-        return baseChineseDay;
-    }
-
-    public static void setBaseChineseDay(int baseChineseDay) {
-        LunarUtil.baseChineseDay = baseChineseDay;
-    }
-
-    public static int[] getBigLeapMonthYears() {
-        return bigLeapMonthYears;
-    }
-
-    public static void setBigLeapMonthYears(int[] bigLeapMonthYears) {
-        LunarUtil.bigLeapMonthYears = bigLeapMonthYears;
-    }
-
-    public static char[][] getSectionalTermMap() {
-        return sectionalTermMap;
-    }
-
-    public static void setSectionalTermMap(char[][] sectionalTermMap) {
-        LunarUtil.sectionalTermMap = sectionalTermMap;
-    }
-
-    public static char[][] getSectionalTermYear() {
-        return sectionalTermYear;
-    }
-
-    public static void setSectionalTermYear(char[][] sectionalTermYear) {
-        LunarUtil.sectionalTermYear = sectionalTermYear;
-    }
-
-    public static char[][] getPrincipleTermMap() {
-        return principleTermMap;
-    }
-
-    public static void setPrincipleTermMap(char[][] principleTermMap) {
-        LunarUtil.principleTermMap = principleTermMap;
-    }
-
-    public static char[][] getPrincipleTermYear() {
-        return principleTermYear;
-    }
-
-    public static void setPrincipleTermYear(char[][] principleTermYear) {
-        LunarUtil.principleTermYear = principleTermYear;
-    }
-
-    public static String[] getMonthNames() {
-        return monthNames;
-    }
-
-    public static void setMonthNames(String[] monthNames) {
-        LunarUtil.monthNames = monthNames;
-    }
-
-    public static String[] getChineseMonthNames() {
-        return chineseMonthNames;
-    }
-
-    public static void setChineseMonthNames(String[] chineseMonthNames) {
-        LunarUtil.chineseMonthNames = chineseMonthNames;
-    }
-
-    public static String[] getPrincipleTermNames() {
-        return principleTermNames;
-    }
-
-    public static void setPrincipleTermNames(String[] principleTermNames) {
-        LunarUtil.principleTermNames = principleTermNames;
-    }
-
-    public static String[] getSectionalTermNames() {
-        return sectionalTermNames;
-    }
-
-    public static void setSectionalTermNames(String[] sectionalTermNames) {
-        LunarUtil.sectionalTermNames = sectionalTermNames;
-    }
-
-    /*public static void main(String[] args){
-        LunarUtil lunarCalender = new LunarUtil(2019,12, 26);
-        String lunarStr = lunarCalender.getChineseYear() // 获取到年的字符串，如丙申
-                + "年"
-                + lunarCalender.getChineseMonth() // 获取月，如正月
-                + lunarCalender.getChineseDay(); // 获取日，如初一
-        System.out.println(lunarStr);
-    }*/
+//    public static void main(String[] args) {
+//        System.out.println(new LunarUtil(2020, 1, 31));
+//    }
 }
 
