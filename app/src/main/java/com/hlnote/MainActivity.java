@@ -4,16 +4,14 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +27,6 @@ import java.util.TimeZone;
 import Utils.DateUtils;
 import Utils.MyDatePiker;
 import Utils.TimeFormatUtils;
-import Utils.UI_Utils;
 
 public class MainActivity extends AppCompatActivity {
 
