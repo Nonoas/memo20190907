@@ -1,4 +1,4 @@
-package com.hlnote;
+package com.hlnote.Service;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -8,6 +8,9 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
+
+import com.hlnote.DBOpenHelper;
+import com.hlnote.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -102,7 +105,7 @@ public class MyRemoteViewService extends RemoteViewsService {
         // 在本例，layout/test_list_item.xml定义list中子view，只含有一个TextView，id为R.id.testview_item_id.
         @Override
         public RemoteViews getViewAt(int position) {
-            RemoteViews remoteViews=new RemoteViews(mcontext.getPackageName(),R.layout.widget_list_item);
+            RemoteViews remoteViews=new RemoteViews(mcontext.getPackageName(), R.layout.widget_list_item);
             remoteViews.setTextViewText(R.id.widget_item_title,titleList.get(position));
             remoteViews.setTextViewText(R.id.widget_s_time,s_timeList.get(position));
             remoteViews.setTextViewText(R.id.widget_e_time,e_timeList.get(position));

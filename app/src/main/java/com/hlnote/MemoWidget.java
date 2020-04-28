@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.hlnote.Service.MemoWidgetService;
+import com.hlnote.Service.MyRemoteViewService;
+
 public class MemoWidget extends AppWidgetProvider {
     private static final String TAG = "MemoWidget";
     public static final String AppWidget_Updata_Action = "com.hlnote.MemoWidget";

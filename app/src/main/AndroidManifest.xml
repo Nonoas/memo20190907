@@ -74,13 +74,13 @@
         </activity>
         <!-- 用于刷新备忘录桌面插件的视图 -->
         <service
-            android:name=".MyRemoteViewService"
+            android:name=".Service.MyRemoteViewService"
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <!-- 用于定时发送消息更新备忘录组件视图 -->
         <service
-            android:name=".MemoWidgetService"
+            android:name=".Service.MemoWidgetService"
             android:enabled="true"
             android:exported="false" />
 
